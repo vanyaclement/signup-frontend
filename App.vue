@@ -1,5 +1,4 @@
 <template>
- 
   <v-app>
     <div class="bg">
     <v-main class="d-flex justify-center align-center">
@@ -42,10 +41,6 @@ import axios from 'axios';
 
 export default {
   name: "App",
-
-
-  
-
   data: () => ({
     firstName: '',
       firstNameRules: [
@@ -67,7 +62,17 @@ export default {
           v => /[0-9]/.test(v) || 'Password must contain a number',
           v => /[^A-Za-z0-9]/.test(v) || 'Password must contain special character'
         ]
-  }),
+}),
+
+   
+  student: {
+    firstName:" ",
+    lastName:" ",
+    email:" ",
+    password:" "
+
+  },
+
   created(){
 
   },
@@ -75,21 +80,30 @@ export default {
     console.log("mounted() called.........");
 
   },
-  methods:{
+ 
+   methods:{
     async saveData()
-    {
-     await axios.post("http://localhost:5100/user/create", this.student)
-      .then((data)=> {
-        console.log(data,"asbchbdhbhjsdbchj")
-      })
-       .catch((error) => {
-        console.log(error,"occuresddd")
-       });
+    { 
+      const data={
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+      };
+      try{
+   const response= await axios.post("http://localhost:5200/user/create", data)
+   console.log(response.data);
+   alert("Congragulatios User Created Successfully");
+      } catch(error) {
+        console.error(error)
+      }
+       
+      },
       
-    }
+    },
   }
  
-}
+
 
 </script>
 <style scoped>
@@ -97,3 +111,4 @@ export default {
   background-color: blue;
 }
 </style>
+
